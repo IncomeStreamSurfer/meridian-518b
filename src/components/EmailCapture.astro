@@ -1,0 +1,87 @@
+---
+interface Props {
+  variant?: 'light' | 'dark';
+  compact?: boolean;
+  source?: string;
+  id?: string;
+}
+const { variant = 'light', compact = false, source = 'footer', id = 'list' } = Astro.props;
+const isDark = variant === 'dark';
+const inputBg = isDark ? 'bg-white/5 border-white/15 text-cream placeholder-white/40 focus:border-ember' : 'bg-white/60 border-ink/15 text-ink placeholder-ink/40 focus:border-ember';
+const buttonCls = isDark ? 'bg-ember text-ink hover:bg-ember-soft' : 'bg-ink text-cream hover:bg-ember hover:text-ink';
+const muted = isDark ? 'text-white/60' : 'text-muted';
+---
+<form
+  id={id}
+  data-email-form
+  data-source={source}
+  class={`w-full ${compact ? '' : 'max-w-xl'}`}
+  novalidate
+>
+  <div class="flex flex-col sm:flex-row gap-2">
+    <label class="sr-only" for={`${id}-email`}>Email address</label>
+    <input
+      id={`${id}-email`}
+      name="email"
+      type="email"
+      required
+      autocomplete="email"
+      placeholder="you@domain.com"
+      class={`flex-1 px-4 py-3 rounded-full border ${inputBg} text-sm outline-none transition-colors`}
+    />
+    <button
+      type="submit"
+      class={`px-5 py-3 rounded-full text-sm tracking-wide font-medium transition-colors ${buttonCls}`}
+      data-default-label="Join the list"
+    >
+      Join the list
+    </button>
+  </div>
+  <p data-form-status class={`mt-3 text-xs ${muted}`} aria-live="polite">
+    No spam. Launch day dispatches and one or two behind-the-scenes notes a month.
+  </p>
+</form>
+
+<script>
+  function wireEmailForms() {
+    const forms = document.querySelectorAll<HTMLFormElement>('[data-email-form]');
+    forms.forEach((form) => {
+      if ((form as any)._wired) return;
+      (form as any)._wired = true;
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const emailInput = form.querySelector<HTMLInputElement>('input[name="email"]');
+        const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+        const status = form.querySelector<HTMLElement>('[data-form-status]');
+        if (!emailInput || !button) return;
+        const email = emailInput.value.trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          if (status) status.textContent = 'Please enter a valid email address.';
+          return;
+        }
+        button.disabled = true;
+        const originalLabel = button.getAttribute('data-default-label') || button.textContent || '';
+        button.textContent = 'Sending…';
+        if (status) status.textContent = 'Reserving your spot…';
+        try {
+          const res = await fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, source: form.dataset.source || 'unknown' }),
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) {
+            throw new Error(data.error || 'Something went wrong.');
+          }
+          window.location.href = '/thanks';
+        } catch (err: any) {
+          button.disabled = false;
+          button.textContent = originalLabel;
+          if (status) status.textContent = err?.message || 'Something went wrong. Please try again.';
+        }
+      });
+    });
+  }
+  wireEmailForms();
+  document.addEventListener('astro:page-load', wireEmailForms);
+</script>
