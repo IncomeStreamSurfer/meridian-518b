@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #f4eee4;
+  --color-paper: #ece3d3;
+  --color-ink: #1a1512;
+  --color-espresso: #2a1f18;
+  --color-ember: #c8862e;
+  --color-ember-soft: #e0a857;
+  --color-muted: #6b5d4f;
+  --font-display: "Fraunces", "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/fraunces/v36/6NUh8FyLNQOQZAnv9ZwNjucMHVn85Ni7emAe8jAFfTLZCs2Pysp.woff2") format("woff2");
+}
+
+html, body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.dark {
+  background-color: var(--color-ink);
+  color: var(--color-cream);
+}
+
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
+
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.85'/></svg>");
+}
+
+::selection { background: var(--color-ember); color: var(--color-cream); }

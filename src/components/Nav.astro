@@ -1,0 +1,27 @@
+---
+interface Props {
+  variant?: 'light' | 'dark';
+}
+const { variant = 'light' } = Astro.props;
+const border = variant === 'dark' ? 'border-white/10' : 'border-ink/10';
+const ink = variant === 'dark' ? 'text-cream' : 'text-ink';
+---
+<header class={`relative z-20 border-b ${border} ${ink}`}>
+  <div class="mx-auto max-w-7xl px-6 lg:px-10 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 font-display text-xl tracking-tight">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="10" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="1" y1="11" x2="21" y2="11" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="11" y1="1" x2="11" y2="21" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+      Meridian
+    </a>
+    <nav class="hidden md:flex items-center gap-8 text-sm tracking-wide">
+      <a href="/our-story" class="hover:text-ember transition-colors">Our Story</a>
+      <a href="/#origins" class="hover:text-ember transition-colors">Origins</a>
+      <a href="/#ritual" class="hover:text-ember transition-colors">The Ritual</a>
+      <a href="/#list" class="inline-flex items-center gap-2 border border-current px-4 py-2 rounded-full hover:bg-ember hover:border-ember hover:text-cream transition-colors">Join the list →</a>
+    </nav>
+    <a href="/#list" class="md:hidden text-sm border border-current px-3 py-1.5 rounded-full">Join</a>
+  </div>
+</header>

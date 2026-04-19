@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import SEOHead from '../components/SEOHead.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  structuredData?: object | object[];
+  canonicalUrl?: string;
+  ogType?: string;
+  variant?: 'light' | 'dark';
+}
+
+const {
+  title,
+  description,
+  structuredData,
+  canonicalUrl,
+  ogType = 'website',
+  variant = 'light',
+} = Astro.props;
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Meridian',
+  url: Astro.site?.toString() ?? '',
+  logo: new URL('/logo.svg', Astro.site ?? 'https://meridian.coffee').toString(),
+  description: 'Specialty coffee brand sourcing traceable single-origin beans for the curious drinker.',
+  sameAs: [],
+};
+
+const schemaList = structuredData
+  ? Array.isArray(structuredData)
+    ? [organizationSchema, ...structuredData]
+    : [organizationSchema, structuredData]
+  : [organizationSchema];
+---
+
+<!doctype html>
+<html lang="en" class={variant === 'dark' ? 'dark-root' : ''}>
+  <head>
+    <SEOHead
+      title={title}
+      description={description}
+      canonicalUrl={canonicalUrl}
+      ogType={ogType}
+      structuredData={schemaList}
+    />
+  </head>
+  <body class={`grain ${variant === 'dark' ? 'dark' : ''}`}>
+    <div class="relative z-10">
+      <slot />
+    </div>
+  </body>
+</html>
