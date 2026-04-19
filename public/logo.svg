@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80">
+  <g fill="none" stroke="#1a1512" stroke-width="1.5">
+    <circle cx="40" cy="40" r="28"/>
+    <line x1="10" y1="40" x2="70" y2="40"/>
+    <line x1="40" y1="10" x2="40" y2="70"/>
+  </g>
+  <text x="90" y="52" font-family="Georgia, serif" font-size="40" fill="#1a1512" letter-spacing="4">MERIDIAN</text>
+</svg>

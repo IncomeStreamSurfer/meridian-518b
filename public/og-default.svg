@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1512"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="950" cy="315" r="230" fill="none" stroke="#c8862e" stroke-width="2"/>
+  <line x1="720" y1="315" x2="1180" y2="315" stroke="#c8862e" stroke-width="1.5"/>
+  <line x1="950" y1="85" x2="950" y2="545" stroke="#c8862e" stroke-width="1.5"/>
+  <text x="90" y="200" font-family="Georgia, serif" font-size="40" fill="#c8862e" letter-spacing="6">MERIDIAN</text>
+  <text x="90" y="320" font-family="Georgia, serif" font-size="72" fill="#f4eee4">Specialty coffee,</text>
+  <text x="90" y="400" font-family="Georgia, serif" font-style="italic" font-size="72" fill="#e0a857">coming soon.</text>
+  <text x="90" y="510" font-family="monospace" font-size="20" fill="#f4eee4" opacity="0.7">coffee at the crossroads of craft and origin</text>
+</svg>
